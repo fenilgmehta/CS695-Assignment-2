@@ -13,8 +13,10 @@
 - Server program configuration is stored in `server.conf`
 - Client program configuration is stored in `client.conf`
 - The client-server communication message configuration is stored in `message.conf`
-- `big-endian` format in for numbers when converted to bytes
-- `2 bytes - unsigned short` is used to represent integers
+- `big-endian` format in used for numbers when converted to bytes
+- `4 bytes - unsigned int` is used to represent client request integers
+- `8 bytes - unsigned long long` is used to represent server response integers
+
 
 ### Useful Commands
 
@@ -55,12 +57,17 @@ virsh -c qemu:///session list  # connect locally as a normal user to his own set
 - https://libvirt.org/docs.html
 - https://libvirt.org/downloads.html
 - Programming
+    - https://www.machinelearningplus.com/python/python-logging-guide/
     - https://uynguyen.github.io/2018/04/30/Big-Endian-vs-Little-Endian/
     - https://stackoverflow.com/questions/21017698/converting-int-to-bytes-in-python-3
         * https://docs.python.org/2/library/struct.html#struct.pack
     - https://stackoverflow.com/questions/34009653/convert-bytes-to-int
     - https://www.geeksforgeeks.org/python-convert-string-to-bytes/
-	
+    - https://tutorialedge.net/python/udp-client-server-python/
+        * https://www.geeksforgeeks.org/udp-server-client-implementation-c/
+        * https://stackoverflow.com/questions/1593946/what-is-af-inet-and-why-do-i-need-it
+    - https://www.studytonight.com/network-programming-in-python/working-with-udp-sockets
+    - https://pythontic.com/modules/socket/udp-client-server-example
 
 
 
