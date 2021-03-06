@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 import signal
 import socket
 import struct
@@ -11,17 +12,24 @@ def serve_request(n: int) -> int:
     return n
 
 
-def start_serving_requests() -> None:
+def start_serving_requests(udp_port) -> None:
     sock: socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     # NOTE: empty udp_host means that the socket should accept requests from all network interfaces
     # udp_host = socket.gethostname()
     udp_host = ''
     logging.debug(f"UDP Host = {udp_host}")
-    udp_port = 21001
     logging.debug(f"UDP Port = {udp_port}")
-    sock.bind((udp_host, udp_port))
-
+    try:
+        sock.bind((udp_host, udp_port))
+    except OSError as e:
+        # OSError: [Errno 98] Address already in use
+        logging.debug(f'OSError e = {e}')
+        udp_port = random.randint(udp_port + 1, udp_port + 20)
+        sock.bind((udp_host, udp_port))
+        logging.debug(f"NEW UDP Port = {udp_port}")
+    except Exception as e:
+        logging.warning(f'Exception e = {e}')
 
     print("Waiting for client requests...")
     while True:
@@ -66,8 +74,9 @@ if __name__ == '__main__':
     # set settings
     logging.basicConfig(
         level=eval(f"logging.{SERVER_SETTINGS['logging_level']}"),
-        stream=(open(SERVER_SETTINGS['logging_file'], 'a') if SERVER_SETTINGS['logging_file'] != '/dev/stdout' else sys.stdout),
+        stream=(open(SERVER_SETTINGS['logging_file'], 'a')
+                if SERVER_SETTINGS['logging_file'] != '/dev/stdout' else sys.stdout),
         format='%(asctime)s :: %(levelname)s :: %(lineno)s :: %(funcName)s :: %(message)s'
     )
 
-    start_serving_requests()
+    start_serving_requests(21001)
