@@ -13,12 +13,15 @@ def serve_request(n: int) -> int:
 
 def start_serving_requests() -> None:
     sock: socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udp_host = socket.gethostname()
+
+    # NOTE: empty udp_host means that the socket should accept requests from all network interfaces
+    # udp_host = socket.gethostname()
+    udp_host = ''
+    logging.debug(f"UDP Host = {udp_host}")
     udp_port = 21001
+    logging.debug(f"UDP Port = {udp_port}")
     sock.bind((udp_host, udp_port))
 
-    logging.debug(f"UDP Host = {udp_host}")
-    logging.debug(f"UDP Port = {udp_port}")
 
     print("Waiting for client requests...")
     while True:
