@@ -26,7 +26,7 @@ def handle_input(user_input, client_conf):
     user_input = user_input.strip()
     if len(user_input) == 0:
         return
-    logging.debug(f"len(user_input) = {len(user_input)}")
+    logging.debug(f'len(user_input) = {len(user_input)}')
     logging.debug(f'user_input = "{user_input}"')
     input_parts = user_input.split()
     if input_parts[0] == '-':
@@ -39,7 +39,7 @@ def handle_input(user_input, client_conf):
                 (input_parts[1], int(input_parts[2]),)
             )
         except ValueError:
-            logging.debug("Removal of server failed")
+            logging.debug('Removal of server failed')
     elif input_parts[0] == '+':
         # add the server to the list
         client_conf['server_address_port'].append((input_parts[1], int(input_parts[2])))
@@ -53,7 +53,7 @@ def handle_input(user_input, client_conf):
 
 
 def start_sending_requests(client_conf, message_conf) -> None:
-    logging.debug("start_sending_requests(...) STARTED :)")
+    logging.debug('start_sending_requests(...) STARTED :)')
     client_conf['server_address_port'] = [(client_conf['server_ip'], int(client_conf['server_port']))]
 
     # Create a UDP socket
@@ -74,16 +74,16 @@ def start_sending_requests(client_conf, message_conf) -> None:
             logging.critical(f'Inside "except" clause for "user_input", type(e)={type(e)}, str(e)={str(e)}')
 
         if len(client_conf['server_address_port']) == 0:
-            logging.debug("Total servers = len(client_conf['server_address_port']) = 0")
+            logging.debug('Total servers = len(client_conf[\'server_address_port\']) = 0')
         for server_i in client_conf['server_address_port']:
             # Generate Random query
             req_int = random.randint(client_conf['req_num_low'], client_conf['req_num_high'])
 
             # Format: big-endian and 4 bytes (unsigned int)
             req_bytes_to_send = struct.pack(">I", req_int)  # max value can be "2**32 - 1"
-            logging.debug(f"Query:")
-            logging.debug(f"    req_int           = {req_int}")
-            logging.debug(f"    req_bytes_to_send = {req_bytes_to_send}")
+            logging.debug(f'Query:')
+            logging.debug(f'    req_int           = {req_int}')
+            logging.debug(f'    req_bytes_to_send = {req_bytes_to_send}')
 
             # Send to server using created UDP socket
             udp_client_socket.sendto(req_bytes_to_send, server_i)
@@ -93,15 +93,15 @@ def start_sending_requests(client_conf, message_conf) -> None:
         try:
             while True:
                 req_reply_bytes, server_addr = udp_client_socket.recvfrom(8)
-                logging.debug(f"Response of server_addr = {server_addr}")
-                logging.debug(f"    req_reply_bytes = {req_reply_bytes}")
-                req_reply_int = int.from_bytes(req_reply_bytes, "big")
-                logging.debug(f"    req_reply_int   = {req_reply_int}")
+                logging.debug(f'Response of server_addr = {server_addr}')
+                logging.debug(f'    req_reply_bytes = {req_reply_bytes}')
+                req_reply_int = int.from_bytes(req_reply_bytes, 'big')
+                logging.debug(f'    req_reply_int   = {req_reply_int}')
         except BlockingIOError:
             pass  # nothing to receive
         except Exception as e:
-            logging.debug(f"type(e) = {type(e)}")
-            logging.debug(f"e = {e}")
+            logging.debug(f'type(e) = {type(e)}')
+            logging.debug(f'e = {e}')
 
         if client_conf['req_load'] == 'low':
             time.sleep(1.3)
@@ -112,19 +112,19 @@ def start_sending_requests(client_conf, message_conf) -> None:
         else:
             logging.critical('Wrong value stored in "client_conf[\'req_load\']"')
     # noinspection PyUnreachableCode
-    logging.debug("start_sending_requests(...) ENDED - this will never execute")
+    logging.debug('start_sending_requests(...) ENDED - this will never execute')
     pass
 
 
 def client_init(client_conf: dict):
     logging.basicConfig(
-        level=eval(f"logging.{client_conf['logging_level']}"),
-        stream=(open(client_conf['logging_file'], 'a') if client_conf['logging_file'] != "/dev/stdout" else sys.stdout),
+        level=eval(f'logging.{client_conf["logging_level"]}'),
+        stream=(open(client_conf['logging_file'], 'a') if client_conf['logging_file'] != '/dev/stdout' else sys.stdout),
         format='%(asctime)s :: %(levelname)s :: %(lineno)s :: %(funcName)s :: %(message)s'
     )
 
     problem_with_fifo = False
-    if client_conf['fifo_communication_file'] != "/dev/stdin":
+    if client_conf['fifo_communication_file'] != '/dev/stdin':
         try:
             # REFER: https://stackoverflow.com/questions/1430446/create-a-temporary-fifo-named-pipe-in-python
             os.mkfifo(client_conf['fifo_communication_file'])
@@ -136,13 +136,13 @@ def client_init(client_conf: dict):
             #     'rt'
             # )
             client_conf['fifo_communication_file_obj'] = open(client_conf['fifo_communication_file'])
-            logging.info("FIFO file successfully opened :)")
+            logging.info('FIFO file successfully opened :)')
         except OSError as e:
-            logging.warning("Failed to create FIFO: %s" % e)
+            logging.warning(f'Failed to create FIFO: {e}')
             problem_with_fifo = True
 
     if problem_with_fifo or client_conf['fifo_communication_file'] == '/dev/stdin':
-        client_conf['fifo_communication_file'] = "/dev/stdin"
+        client_conf['fifo_communication_file'] = '/dev/stdin'
         client_conf['fifo_communication_file_obj'] = sys.stdin
         logging.info(f'File used for communication = "/dev/stdin"')
 
@@ -162,7 +162,7 @@ def signal_handler(sig, frame):
     if GLOBAL_CLIENT_CONF['fifo_communication_file'] != '/dev/stdin':
         # https://www.w3schools.com/python/python_file_remove.asp
         os.remove(GLOBAL_CLIENT_CONF['fifo_communication_file'])
-    logging.debug(f"Successfully deleted '{GLOBAL_CLIENT_CONF['fifo_communication_file']}'")
+    logging.debug(f'Successfully deleted "{GLOBAL_CLIENT_CONF["fifo_communication_file"]}"')
     pprint.pprint(GLOBAL_CLIENT_CONF)
     sys.exit(0)
 
