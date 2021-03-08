@@ -25,6 +25,22 @@
 virsh -V
 virsh -c qemu:///system list   # connect locally as root to the daemon supervising QEMU and KVM domains
 virsh -c qemu:///session list  # connect locally as a normal user to his own set of QEMU and KVM domains
+
+# ---
+
+cd /var/lib/libvirt
+ls -l images
+ls -l /etc/libvirt/libvirt.conf
+cp /etc/libvirt/libvirt.conf ~/.config/libvirt/
+
+# ---
+
+virsh dumpxml ubuntu18.04
+virsh net-list
+virsh net-dhcp-leases default
+virsh domifaddr ubuntu18.04-1
+route
+
 ```
 
 ### References
@@ -54,6 +70,7 @@ virsh -c qemu:///session list  # connect locally as a normal user to his own set
 - **Introduction**
     - https://ubuntu.com/server/docs/virtualization-libvirt
     - https://youtu.be/qr3d-4ctZk4
+    - https://youtu.be/HfNKpT2jo7U
 - https://libvirt.org/docs.html
 - https://libvirt.org/downloads.html
 - Programming
@@ -68,6 +85,8 @@ virsh -c qemu:///session list  # connect locally as a normal user to his own set
         * https://stackoverflow.com/questions/1593946/what-is-af-inet-and-why-do-i-need-it
     - https://www.studytonight.com/network-programming-in-python/working-with-udp-sockets
     - https://pythontic.com/modules/socket/udp-client-server-example
-
-
+- https://stackoverflow.com/questions/40468370/what-does-cpu-time-represent-exactly-in-libvirtvirsh net-list
+- https://stackoverflow.com/questions/19057915/libvirt-fetch-ipv4-address-from-guest
+- https://unix.stackexchange.com/questions/33191/how-to-find-the-ip-address-of-a-kvm-virtual-machine-that-i-can-ssh-into-it
+- https://www.cyberciti.biz/faq/find-ip-address-of-linux-kvm-guest-virtual-machine/
 
