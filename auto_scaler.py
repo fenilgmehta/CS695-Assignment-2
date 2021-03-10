@@ -135,8 +135,8 @@ def run_autoscaler(client_conf: Dict, initially_add_running_servers: bool) -> No
 
     updating_graph.on_launch()
     # logger.debug(list(reversed(updating_graph.ax.get_xticks())))
-    updating_graph.ax.set_xticks(list(range(0, client_conf['graph_history_seconds'] + 1, 10)))
-    updating_graph.ax.set_xticklabels(list(reversed(range(0, client_conf['graph_history_seconds'] + 1, 10))))
+    updating_graph.ax.set_xticks(list(range(0, extra_old_time_data+1, 10)))
+    updating_graph.ax.set_xticklabels(list(reversed(range(0, extra_old_time_data+1, 10))))
     while True:
         logger.debug(f'cpu_low_high_mapper = {cpu_low_high_mapper}')
         logger.debug(f'                       {"   " * mapper_idx}^')
