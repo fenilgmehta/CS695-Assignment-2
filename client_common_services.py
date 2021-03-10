@@ -58,12 +58,13 @@ class ClientFIFO:
     Currently supported functionalities:
         1. Add server syntax    = "+ <IP_ADDRESS> <PORT>"
         2. Remove server syntax = "- <IP_ADDRESS> <PORT>"
-        3. Remove all servers   = "clear"
+        3. Remove all servers   = "clear_servers"
         4. Refresh the servers list = "refresh"
         5. Change client's request/query generation speed:
             a. low
             b. mid
             c. high
+            d. "custom 0.3"   <--- here, 0.3 can be replaced with any floating point value
     """
 
     def __init__(self, fifo_file_object, server_program_port_number: int, fifo_file_name: str = None):
