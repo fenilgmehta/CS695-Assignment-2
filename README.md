@@ -1,22 +1,34 @@
 # CS695-Assignment-2
 
 - Programming Assignment 2 - Build your own auto-scaling client server application using the libvirt API
-- Problem Statement: [https://www.cse.iitb.ac.in/~cs695/pa/pa2.html](https://www.cse.iitb.ac.in/~cs695/pa/pa2.html)
+- [Problem Statement PDF](./Problem%20Statement%20-%20Programming%20Assignment%202.pdf) ([https://www.cse.iitb.ac.in/~cs695/pa/pa2.html](https://www.cse.iitb.ac.in/~cs695/pa/pa2.html))
 
 [comment]: <> (- [Problem Statement]&#40;./Problem%20Statement.pdf&#41;)
 
 [comment]: <> (- [My Solution]&#40;./kvm-hello-world/Answers.md&#41;)
 
+### Solution Details and Results
+
+- Features:
+    * Real time CPU utilization graph
+    * Increase the number of server VM's in case of overload
+    * Decrease the number of server VM's in case of low load
+    * Inform the client program (which plays the role of load balancer) in case of VM failures
+- CPU utilization graph plotted in real time by the autoscaler
+  ![Working of autoscaler program](./CPU%20Usage%20Graph%20of%20VMs.png)
+
 ### Standard things use in programming
 
 - All configuration files are stored in JSON format
-- Server program configuration is stored in `server.conf`
-- Client program configuration is stored in `client.conf`
+- `server.py` configuration is stored in `server.conf`
+- `client.py` configuration is stored in `client.conf`
+    * This same file is used by `auto_scaler.py` as well because, the `client.py` in this assignment is equivalent to a
+      load balancer in real life
+    * `client_communicator.py` also uses the same configuration file
 - The client-server communication message configuration is stored in `message.conf`
 - `big-endian` format in used for numbers when converted to bytes
 - `4 bytes - unsigned int` is used to represent client request integers
 - `8 bytes - unsigned long long` is used to represent server response integers
-
 
 ### Useful Commands
 
@@ -28,6 +40,7 @@ virsh -c qemu:///session list  # connect locally as a normal user to his own set
 
 # ---
 
+# libvirt internals
 cd /var/lib/libvirt
 ls -l images
 ls -l /etc/libvirt/libvirt.conf
@@ -35,6 +48,7 @@ cp /etc/libvirt/libvirt.conf ~/.config/libvirt/
 
 # ---
 
+# Network commands
 virsh dumpxml ubuntu18.04
 virsh net-list
 virsh net-dhcp-leases default
@@ -71,10 +85,13 @@ route
     - https://ubuntu.com/server/docs/virtualization-libvirt
     - https://youtu.be/qr3d-4ctZk4
     - https://youtu.be/HfNKpT2jo7U
-- https://libvirt.org/docs.html
-- https://libvirt.org/downloads.html
-- Programming
-    - https://www.machinelearningplus.com/python/python-logging-guide/
+    - https://youtu.be/6435eNKpyYw
+- **libvirt**
+    - https://libvirt.org/docs.html
+    - https://libvirt.org/downloads.html
+    - https://libvirt.org/html/index.html (Good)
+    - https://libvirt.org/html/libvirt-libvirt-domain.html (Good)
+- **Client Server Programming**
     - https://uynguyen.github.io/2018/04/30/Big-Endian-vs-Little-Endian/
     - https://stackoverflow.com/questions/21017698/converting-int-to-bytes-in-python-3
         * https://docs.python.org/2/library/struct.html#struct.pack
@@ -85,8 +102,10 @@ route
         * https://stackoverflow.com/questions/1593946/what-is-af-inet-and-why-do-i-need-it
     - https://www.studytonight.com/network-programming-in-python/working-with-udp-sockets
     - https://pythontic.com/modules/socket/udp-client-server-example
-- https://stackoverflow.com/questions/40468370/what-does-cpu-time-represent-exactly-in-libvirtvirsh net-list
-- https://stackoverflow.com/questions/19057915/libvirt-fetch-ipv4-address-from-guest
-- https://unix.stackexchange.com/questions/33191/how-to-find-the-ip-address-of-a-kvm-virtual-machine-that-i-can-ssh-into-it
-- https://www.cyberciti.biz/faq/find-ip-address-of-linux-kvm-guest-virtual-machine/
+- **Other references**
+    - https://www.machinelearningplus.com/python/python-logging-guide/
+    - https://stackoverflow.com/questions/40468370/what-does-cpu-time-represent-exactly-in-libvirtvirsh
+    - https://stackoverflow.com/questions/19057915/libvirt-fetch-ipv4-address-from-guest
+    - https://unix.stackexchange.com/questions/33191/how-to-find-the-ip-address-of-a-kvm-virtual-machine-that-i-can-ssh-into-it
+    - https://www.cyberciti.biz/faq/find-ip-address-of-linux-kvm-guest-virtual-machine/
 
