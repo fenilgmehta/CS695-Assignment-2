@@ -1,15 +1,15 @@
 import logging
-import os
 import random
 import signal
 import socket
 import struct
-import json
 import sys
 
 
 def serve_request(n: int) -> int:
-    return n
+    a = (2 ** n)
+    # 1021 is the largest prime smaller than 1024
+    return a % 1021
 
 
 def start_serving_requests(udp_port) -> None:
@@ -64,12 +64,13 @@ if __name__ == '__main__':
     # load settings
     # with open('message.conf') as f:
     #     MESSAGE = json.load(f)
-    with open('server.conf') as f:
-        # SERVER_SETTINGS = json.load(f)
-        SERVER_SETTINGS = {
-            'logging_level': 'DEBUG',
-            'logging_file': '/dev/stdout',
-        }
+    # with open('server.conf') as f:
+    #     SERVER_SETTINGS = json.load(f)
+    SERVER_SETTINGS = {
+        'logging_level': 'DEBUG',
+        'logging_file': '/tmp/CS695-server.log',
+        # 'logging_file': '/dev/stdout',
+    }
 
     # set settings
     logging.basicConfig(
