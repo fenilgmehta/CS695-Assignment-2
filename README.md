@@ -26,15 +26,18 @@
     4. Launch the first VM - `AnyPrefix-0000`
     5. Open terminal and run `client.py`, `client_communicator.py`, `auto_scaler.py`
     6. Use `client_communicator.py` to configure the `client.py` at runtime. Supported functionalities:
-        * Add server syntax    = "+ <IP_ADDRESS> <PORT>"
-        * Remove server syntax = "- <IP_ADDRESS> <PORT>"
-        * Remove all servers   = "clear_servers"
-        * Refresh the servers list = "refresh"
+        * Add server syntax    = `+ <IP_ADDRESS> <PORT>`
+            - Here, IP Address and Port Number are of the server program.
+        * Remove server syntax = `- <IP_ADDRESS> <PORT>`
+            - Here, IP Address and Port Number are of the server program.
+        * Remove all servers   = `clear_servers`
+        * Refresh the servers list = `refresh`
+            - libvirt API is used for checking the list of online VM's and those VM's whose name prefix does not match with the one mentioned in the `client.conf` are removed from the list.
         * Change client's request/query generation speed:
-            - *low*
-            - *mid*
-            - *high*
-            - *custom 0.3*   <--- here, 0.3 can be replaced with any floating point value
+            - `low`
+            - `mid`
+            - `high`
+            - `custom 0.3`   <--- here, 0.3 can be replaced with any floating point value
     7. View the realtime graph plotted by the `auto_scaler.py` to get an insight into the working of the autoscaler
 ### Standard things use in programming
 
