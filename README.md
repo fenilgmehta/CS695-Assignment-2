@@ -7,30 +7,30 @@
 ### Solution Details and Results
 
 - Features:
-    * Real time CPU utilization graph
-    * Increase the number of server VM's in case of overload
-    * Decrease the number of server VM's in case of low load
-    * Inform the client program (which plays the role of load balancer) in case of VM failures
+    - Real time CPU utilization graph
+    - Increase the number of server VM's in case of overload
+    - Decrease the number of server VM's in case of low load
+    - Inform the client program (which plays the role of load balancer) in case of VM failures
 - CPU utilization graph plotted in real time by the autoscaler
-    * The part to the right of `0` on the x-axis is the deciding factor for the action taken by the autoscaler 
+    - The part to the right of `0` on the x-axis is the deciding factor for the action taken by the autoscaler 
   ![Working of autoscaler program](./CPU%20Usage%20Graph%20of%20VMs.png)
 - To run/test the program
     1. Create a VM in Virtual Machine Manager and put the `server.py` code in it.
-    2. Configure the VM to autostart the server.py program as soon as the OS boots.
+    2. Configure the VM to autostart the `server.py` program as soon as the OS boots.
     3. Create multiple clones of the same VM and follow a proper naming convention. The numbering should start from 0
-        * Example: `AnyPrefix-0000`, `AnyPrefix-0001`, `AnyPrefix-0002`
-        * Write about this naming convention inside the `client.conf` file
+        - Example: `AnyPrefix-0000`, `AnyPrefix-0001`, `AnyPrefix-0002`
+        - Write about this naming convention inside the `client.conf` file
     4. Launch the first VM - `AnyPrefix-0000`
     5. Open terminal and run `client.py`, `client_communicator.py`, `auto_scaler.py`
     6. Use `client_communicator.py` to configure the `client.py` at runtime. Supported functionalities:
-        * Add server syntax    = `+ <IP_ADDRESS> <PORT>`
+        - Add server syntax    = `+ <IP_ADDRESS> <PORT>`
             - Here, IP Address and Port Number are of the server program.
-        * Remove server syntax = `- <IP_ADDRESS> <PORT>`
+        - Remove server syntax = `- <IP_ADDRESS> <PORT>`
             - Here, IP Address and Port Number are of the server program.
-        * Remove all servers   = `clear_servers`
-        * Refresh the servers list = `refresh`
+        - Remove all servers   = `clear_servers`
+        - Refresh the servers list = `refresh`
             - libvirt API is used for checking the list of online VM's and those VM's whose name prefix does not match with the one mentioned in the `client.conf` are removed from the list.
-        * Change client's request/query generation speed:
+        - Change client's request/query generation speed:
             - `low`
             - `mid`
             - `high`
@@ -43,9 +43,9 @@
 - All configuration files are stored in JSON format
 - `server.py` configuration is stored in `server.conf`
 - `client.py` configuration is stored in `client.conf`
-    * This same file is used by `auto_scaler.py` as well because, the `client.py` in this assignment is equivalent to a
+    - This same file is used by `auto_scaler.py` as well because, the `client.py` in this assignment is equivalent to a
       load balancer in real life
-    * `client_communicator.py` also uses the same configuration file
+    - `client_communicator.py` also uses the same configuration file
 - The client-server communication message configuration is stored in `message.conf`
 - `big-endian` format in used for numbers when converted to bytes
 - `4 bytes - unsigned int` is used to represent client request integers
@@ -100,9 +100,9 @@ route
       ```
     - To install libvirt python library in virtual environment/conda
         - https://stackoverflow.com/questions/45473463/pip-install-libvirt-python-fails-in-virtualenv
-            * `sudo apt-get install libvirt-dev`
+            - `sudo apt-get install libvirt-dev`
         - https://pypi.org/project/libvirt-python/
-            * `pip install libvirt-python`
+            - `pip install libvirt-python`
     - https://unix.stackexchange.com/questions/599651/whats-the-purpose-of-kvm-libvirt-and-libvirt-qemu-groups-in-linux
 - **Introduction**
     - https://ubuntu.com/server/docs/virtualization-libvirt
@@ -117,12 +117,12 @@ route
 - **Client Server Programming**
     - https://uynguyen.github.io/2018/04/30/Big-Endian-vs-Little-Endian/
     - https://stackoverflow.com/questions/21017698/converting-int-to-bytes-in-python-3
-        * https://docs.python.org/2/library/struct.html#struct.pack
+        - https://docs.python.org/2/library/struct.html#struct.pack
     - https://stackoverflow.com/questions/34009653/convert-bytes-to-int
     - https://www.geeksforgeeks.org/python-convert-string-to-bytes/
     - https://tutorialedge.net/python/udp-client-server-python/
-        * https://www.geeksforgeeks.org/udp-server-client-implementation-c/
-        * https://stackoverflow.com/questions/1593946/what-is-af-inet-and-why-do-i-need-it
+        - https://www.geeksforgeeks.org/udp-server-client-implementation-c/
+        - https://stackoverflow.com/questions/1593946/what-is-af-inet-and-why-do-i-need-it
     - https://www.studytonight.com/network-programming-in-python/working-with-udp-sockets
     - https://pythontic.com/modules/socket/udp-client-server-example
 - **Other references**
