@@ -11,9 +11,12 @@
     - Increase the number of server VM's in case of overload
     - Decrease the number of server VM's in case of low load
     - Inform the client program (which plays the role of load balancer) in case of VM failures
+
 - CPU utilization graph plotted in real time by the autoscaler
     - The part to the right of `0` on the x-axis is the deciding factor for the action taken by the autoscaler 
+
   ![Working of autoscaler program](./CPU%20Usage%20Graph%20of%20VMs.png)
+
 - To run/test the program
     1. Create a VM in Virtual Machine Manager and put the `server.py` code in it.
     2. Configure the VM to autostart the `server.py` program as soon as the OS boots.
