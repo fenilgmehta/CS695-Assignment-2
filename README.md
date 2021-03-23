@@ -3,9 +3,6 @@
 - Programming Assignment 2 - Build your own auto-scaling client server application using the libvirt API
 - [Problem Statement PDF](./Problem%20Statement%20-%20Programming%20Assignment%202.pdf) ([https://www.cse.iitb.ac.in/~cs695/pa/pa2.html](https://www.cse.iitb.ac.in/~cs695/pa/pa2.html))
 
-[comment]: <> (- [Problem Statement]&#40;./Problem%20Statement.pdf&#41;)
-
-[comment]: <> (- [My Solution]&#40;./kvm-hello-world/Answers.md&#41;)
 
 ### Solution Details and Results
 
@@ -39,6 +36,8 @@
             - `high`
             - `custom 0.3`   <--- here, 0.3 can be replaced with any floating point value
     7. View the realtime graph plotted by the `auto_scaler.py` to get an insight into the working of the autoscaler
+
+
 ### Standard things use in programming
 
 - All configuration files are stored in JSON format
@@ -51,6 +50,7 @@
 - `big-endian` format in used for numbers when converted to bytes
 - `4 bytes - unsigned int` is used to represent client request integers
 - `8 bytes - unsigned long long` is used to represent server response integers
+
 
 ### Useful Commands
 
@@ -78,6 +78,7 @@ virsh domifaddr ubuntu18.04-1
 route
 
 ```
+
 
 ### References
 
